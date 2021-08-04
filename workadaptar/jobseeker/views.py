@@ -5,7 +5,7 @@ from django.utils.http import urlsafe_base64_decode
 from user_custom.models import User_custom
 from django.utils.encoding import force_text
 from .models import Candidate, Candidate_profile, Candidate_edu, Candidate_skills, Candidate_profdetail, \
-    Candidate_resume
+    Candidate_resume, Resume_order
 from .forms import SignUpForm, ProfileRegisterForm, ProfileRegisterForm_edu, ProfileRegisterForm_profdetail, \
     ProfileRegisterForm_resume, ProfileRegistration_expdetail, ProfileRegistration_skills, Resumeforming
 from django.views.generic import View
@@ -19,6 +19,9 @@ from django.shortcuts import render, redirect
 from jobseeker.tokens import account_activation_token
 from recruiter.models import Employer_job, Employer_jobquestion, Employer_job_Applied, Employer_job_Like, \
     Employer_job_Saved, Employer_candidate_jobanswer, Employer_expired_job, Employer_profile
+import razorpay
+
+client = razorpay.Client(auth=("rzp_test_N6naZCMdnNcNcU", "pdkCmhFp28iS6acXCLJuyPFb"))
 
 
 class SignUpView(View):
@@ -431,7 +434,24 @@ def ResumeCreation(request):
                 f.amount = 250
             elif f.resume_type == 'C':
                 f.amount = 250
+
             f.save()
-            return redirect('jobseeker:SavedJobs')
+            pk = f.pk
+            return redirect('jobseeker:resume_payment', pk)
 
     return render(request, 'jobseeker/resume.html', {'form': form})
+
+
+def payment(request, pk):
+    r = Resume_order.objects.get(pk=pk)
+    a = r.amount*100
+    name = r.candidate.user
+    if request.method == 'POST':
+        order_amount = a
+        order_currency = 'INR'
+
+        payment=client.order.create(amount=order_amount, currency=order_currency)
+        r.is_payment_Done = True
+        r.save()
+        return redirect('jobseeker:jobseeker_home')
+    return render(request, 'jobseeker/payment.html', {'amount': a, 'user': name})
