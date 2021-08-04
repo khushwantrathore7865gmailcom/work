@@ -425,11 +425,11 @@ def ResumeCreation(request):
             f = form.save(commit=False)
             print(f)
             f.candidate = c
-            if f.resume_type=='A':
+            if f.resume_type == 'A':
                 f.amount = 250
-            elif f.resume_type=='B':
+            elif f.resume_type == 'B':
                 f.amount = 250
-            elif f.resume_type=='C':
+            elif f.resume_type == 'C':
                 f.amount = 250
             f.save()
             return redirect('jobseeker:SavedJobs')

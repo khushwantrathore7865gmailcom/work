@@ -312,17 +312,17 @@ def publish_job(request, pk):
 
 
 # @login_required(login_url='/login/')
-def ProfileView(request, pk):
-    profile = Employer.objects.get(user=User_custom.objects.get(id=pk))
-    if request.method == 'POST':
-        form1 = ProfileRegisterForm(request.POST)
-        if form1.is_valid():
-            f1 = form1.save(commit=False)
-            f1.user_id = profile
-        #
-    form1 = ProfileRegisterForm()
+def ProfileView(request):
+    u = request.user
+    e = Employer.objects.get(user=u)
+    profile = Employer_profile.objects.get(employer=e)
 
-    return render(request, 'dashboard/my-profile.html', {"form1": form1})
+    return render(request, 'employer/skills.html', {
+        "user": u,
+        "profile": profile,
+
+    })
+
 
 
 def job_post(request):
