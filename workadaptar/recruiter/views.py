@@ -193,6 +193,7 @@ def view_applied_candidate(request, pk):
     professional_profile = []
     skill = []
     resume = []
+    expect = []
     candidate_answer = []
     e = Employer.objects.get(user=request.user)
     job = Employer_job.objects.get(pk=pk)
@@ -204,6 +205,7 @@ def view_applied_candidate(request, pk):
         candidate_user.append(c.user)
         education_profile.append(Candidate_edu.objects.filter(user_id=c))
         professional_profile.append(Candidate_profdetail.objects.filter(user_id=c))
+        expect.append(Candidate_expdetail.objects.get(user_id=c))
         skill.append(Candidate_skills.objects.filter(user_id=c))
 
         resume.append(Candidate_resume.objects.get(user_id=c))
@@ -213,7 +215,7 @@ def view_applied_candidate(request, pk):
     # quest = zip(question, candidate_answer)
     print(candidate_answer)
     objects = zip(candidate_profile, education_profile, professional_profile, skill, resume,
-                  candidate_user, candidate_Applied)
+                  candidate_user, candidate_Applied, expect)
 
     return render(request, 'employer/job_candidate.html',
                   {'candidate': objects, 'job': job, 'question': question, 'answer': candidate_answer})
@@ -246,8 +248,8 @@ def shortlistview_applied_candidate(request, pk):
 
     objects = zip(candidate_profile, education_profile, professional_profile, skill, resume,
                   candidate_user, candidate_Applied, expect)
-    question = zip(question, candidate_answer)
-    return render(request, 'employer/shortlisted_view.html', {'candidate': objects, 'job': job, 'qna': question})
+    # question = zip(question, candidate_answer)
+    return render(request, 'employer/shortlisted_view.html', {'candidate': objects, 'job': job, 'question': question, 'answer': candidate_answer})
 
 
 def disqualifyview_applied_candidate(request, pk):
@@ -257,6 +259,7 @@ def disqualifyview_applied_candidate(request, pk):
     professional_profile = []
     skill = []
     resume = []
+    expect=[]
     candidate_answer = []
     e = Employer.objects.get(user=request.user)
     job = Employer_job.objects.get(pk=pk)
@@ -268,6 +271,7 @@ def disqualifyview_applied_candidate(request, pk):
         candidate_user.append(c.user)
         education_profile.append(Candidate_edu.objects.filter(user_id=c))
         professional_profile.append(Candidate_profdetail.objects.filter(user_id=c))
+        expect.append(Candidate_expdetail.objects.get(user_id=c))
         skill.append(Candidate_skills.objects.filter(user_id=c))
 
         resume.append(Candidate_resume.objects.get(user_id=c))
@@ -275,9 +279,9 @@ def disqualifyview_applied_candidate(request, pk):
             candidate_answer.append(Employer_candidate_jobanswer.objects.get(question_id=q, candidate_id=c))
 
     objects = zip(candidate_profile, education_profile, professional_profile, skill, resume,
-                  candidate_user, candidate_Applied)
-    question = zip(question, candidate_answer)
-    return render(request, 'employer/disqualified.html', {'candidate': objects, 'job': job, 'qna': question})
+                  candidate_user, candidate_Applied,expect)
+    # question = zip(question, candidate_answer)
+    return render(request, 'employer/disqualified.html', {'candidate': objects, 'job': job, 'question': question, 'answer': candidate_answer})
 
 
 def shortlist(request, pk):
