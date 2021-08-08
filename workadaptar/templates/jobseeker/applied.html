@@ -76,15 +76,17 @@
 			<div class="col-md-12">
 				<div class="heading">
 					<h3>Applied Jobs <span>Page</span></h3>
-<!--					<h4>100+ Handpicked Jobs Just For You</h4>-->
+					<h4>Jobs you applied in</h4>
 				</div>
 			</div>
 
- <div class="col-md-9 col-12">
+<div class="col-md-10 col-12 mx-auto">
        {% for o in jobs %}
 				<div class="job-right">
 					<div class="job-right-jobs">
 						<div class="job-right-jobs-image">
+                                                        <img src={{o.4.company_logo.url}}>
+
             <div class="jobs-main">
             <div class="text-jobs">
       <h5>{{o.0.job_id.job_title}}</h5>

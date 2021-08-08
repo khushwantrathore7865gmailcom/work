@@ -334,6 +334,8 @@ def SavedJobs(request):
     common = []
     job_skills = []
     my_sk = []
+    post_date = []
+    saved_date = []
     c = Candidate.objects.get(user=request.user)
     try:
         cp = Candidate_profile.objects.get(user_id=c)
@@ -371,6 +373,8 @@ def SavedJobs(request):
                 #     continue
                 if userS:
                     e = job.employer_id
+                    post_date.append(job.created_on)
+                    saved_date.append(userS.saved_on)
                     companyprofile.append(Employer_profile.objects.get(employer=e))
                     # print(userS)
                     # continue
@@ -381,7 +385,7 @@ def SavedJobs(request):
 
                 print(relevant_jobs)
 
-        objects = zip(relevant_jobs, common, job_skills, job_ques, companyprofile)
+        objects = zip(relevant_jobs, common, job_skills, job_ques, companyprofile,post_date,saved_date)
 
         return render(request, 'jobseeker/savedjobs.html', {'jobs': objects})
     else:
@@ -444,13 +448,13 @@ def ResumeCreation(request):
 
 def payment(request, pk):
     r = Resume_order.objects.get(pk=pk)
-    a = r.amount*100
+    a = r.amount * 100
     name = r.candidate.user
     if request.method == 'POST':
         order_amount = a
         order_currency = 'INR'
 
-        payment=client.order.create(amount=order_amount, currency=order_currency)
+        payment = client.order.create(amount=order_amount, currency=order_currency)
         r.is_payment_Done = True
         r.save()
         return redirect('jobseeker:jobseeker_home')
