@@ -208,7 +208,7 @@ def view_applied_candidate(request, pk):
         c = can.candidate_id
         candidate_profile.append(Candidate_profile.objects.get(user_id=c))
         candidate_user.append(c.user)
-        education_profile.append(Candidate_edu.objects.filter(user_id=c))
+        education_profile.append(Candidate_edu.objects.filter(user_id=c).first())
         professional_profile.append(Candidate_profdetail.objects.filter(user_id=c))
         expect.append(Candidate_expdetail.objects.get(user_id=c))
         skill.append(Candidate_skills.objects.filter(user_id=c))
