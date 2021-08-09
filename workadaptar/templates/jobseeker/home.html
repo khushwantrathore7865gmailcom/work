@@ -12,7 +12,35 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
           <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  		<style>
+		.job-left.job-left-images-new img {
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+}
+.job-left-desc {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 0px 50px 0px rgb(0 0 1 / 25%);
+}
 
+.job-left.job-left-images-new {
+    position: relative;
+}
+
+.job-left.job-left-images-new:after {content: "";position: absolute;background: #fff;top: 22%;left: 0;width: 100%;height: 30%;z-index: -1;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 0px 50px 0px rgb(0 0 1 / 25%);
+}
+.job-left.job-left-images-new {
+    background: transparent;
+    box-shadow: none;
+}
+.job-left-desc {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 39px 50px 0px rgb(0 0 1 / 14%);
+}
+
+		</style>
   </head>
   <body>
 
@@ -61,6 +89,7 @@
       </li>
 	  <li class="nav-item">
         <a class="nav-link" href="{% url 'jobseeker:profile' %}"><img src={{cp.profile_pic.url}}></a>
+
       </li>
 
 	 </ul>
@@ -83,16 +112,17 @@
 					<h4>100+ Handpicked Jobs Just For You</h4>
 				</div>
 			</div>
+
             <div class="col-md-3 col-12">
-				<div class="job-left">
-						<img src={{cp.profile_pic.url}}>
+				<div class="job-left job-left-images-new">
+						<img src="{{cp.profile_pic.url}}">
 						<div class="job-left-desc">
 							<h2>{{c.user.first_name}} {{c.user.last_name}}</h2>
-<!--								<h4>UX/ UI Designer</h4>-->
-								<h5>Email address:</h5>
+
+								<h5>Email:</h5>
 								<h6>{{c.user}}</h6>
-<!--								<h5>Location:</h5>-->
-<!--								<h6>Chandigarh</h6>-->
+								<h5>Location:</h5>
+								<h6>{{cp.city}},{{cp.state}}</h6>
 
 						</div>
 				</div>
@@ -175,12 +205,11 @@
 
    </form>
                <div class="share">
-     <ul class="list-inline">
-     </ul>
+     <br>
+                   <br>
 
-			<a class="carousel-control-prev" href="#{{o.0.pk}}" role="button" data-slide="prev">
+			<a class="carousel-control-prev" href="#{{o.0.pk}}" role="button" data-slide="prev" style="float:right">
     <p>Back</p>
-    <span class="sr-only">Previous</span>
   </a>
                </div>
 
