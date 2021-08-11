@@ -13,6 +13,21 @@
           <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   		<style>
+			.dropdown-toggle::after
+		{display: none;}
+		li.nav-item.show {
+    position: relative;
+}
+.navbar-expand-lg .navbar-nav .dropdown-menu {
+    top: 66px;
+}
+ul.navbar-nav li.nav-item.active {
+    margin: 0 auto;
+}
+ul.navbar-nav li.nav-item.show {
+    TEXT-ALIGN: CENTER;
+}
+
 		.job-left.job-left-images-new img {
     width: 270px;
     height: 270px;
@@ -39,6 +54,7 @@
     background: rgba(255, 255, 255, 1);
     box-shadow: 0 39px 50px 0px rgb(0 0 1 / 14%);
 }
+
 
 		</style>
   </head>
@@ -79,16 +95,22 @@
 	  <li class="nav-item">
         <a class="nav-link" href="{% url 'jobseeker:SavedJobs' %}">Saved</a>
       </li>
-	  <li class="nav-item active">
+
+	  <li class="nav-item">
         <a class="nav-link" href="#">Resume</a>
       </li>
 
-</li>
 	  <li class="nav-item bell-icon">
         <a class="nav-link" href="#"><img src="{% static 'images/bell.png' %}"></a>
       </li>
 	  <li class="nav-item">
-        <a class="nav-link" href="{% url 'jobseeker:profile' %}"><img src={{cp.profile_pic.url}}></a>
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><img src={{cp.profile_pic.url}}></a>
+           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'jobseeker:profile' %}">My Profile</a>
+          <a class="dropdown-item" href="#">setting</a>
+
+          <a class="dropdown-item" href="#">Log Out</a>
+        </div>
 
       </li>
 
